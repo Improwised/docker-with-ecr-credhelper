@@ -10,8 +10,9 @@ RUN set -ex \
     gcc g++ musl-dev go git \
   && apk add --no-cache --virtual .run-deps \
     # Miscellaneous packages
-    ca-certificates \
-    # Setup Go Build Environment
+    ca-certificates curl jq python py-pip \
+  && pip install awscli \
+  # Setup Go Build Environment
   && export GOPATH=/go \
     && mkdir $GOPATH \
     && git clone https://$APP_REPO $GOPATH/src/$APP_REPO \
