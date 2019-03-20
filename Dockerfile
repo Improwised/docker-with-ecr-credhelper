@@ -10,7 +10,7 @@ RUN set -ex \
     gcc g++ musl-dev go git \
   && apk add --no-cache --virtual .run-deps \
     # Miscellaneous packages
-    bash ca-certificates curl jq python py-pip \
+    bash ca-certificates curl jq openssl python py-pip \
   && pip install awscli \
   # Setup Go Build Environment
   && export GOPATH=/go \
