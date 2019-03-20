@@ -10,7 +10,7 @@ RUN set -ex \
     gcc g++ musl-dev go git \
   && apk add --no-cache --virtual .run-deps \
     # Miscellaneous packages
-    ca-certificates curl jq python py-pip \
+    bash ca-certificates curl jq python py-pip \
   && pip install awscli \
   # Setup Go Build Environment
   && export GOPATH=/go \
@@ -21,6 +21,11 @@ RUN set -ex \
     && GOOS=linux CGO_ENABLED=1 go build -installsuffix cgo \
        -a -ldflags '-s -w' -o /usr/bin/docker-credential-ecr-login \
        ./ecr-login/cli/docker-credential-ecr-login \
+  # Install AWS IAM Authenticator
+  && curl -L -o /usr/bin/aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.11.5/2018-12-06/bin/linux/amd64/aws-iam-authenticator \
+    && chmod +x /usr/bin/aws-iam-authenticator \
+  # Install Helm
+  && curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | tac | bash \
   # Cleanup
   && apk del --purge -r .build-deps \
   && rm -rf $GOPATH
