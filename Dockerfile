@@ -25,6 +25,7 @@ RUN set -ex \
   && curl -L -o /usr/bin/aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.11.5/2018-12-06/bin/linux/amd64/aws-iam-authenticator \
     && chmod +x /usr/bin/aws-iam-authenticator \
   # Install Helm
+  && export DESIRED_VERSION=v2.12.2 \
   && curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash \
   # Cleanup
   && apk del --purge -r .build-deps \
